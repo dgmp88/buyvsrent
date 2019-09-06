@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 years = 25
-initial_investment = 100000
-monthly_total = 2500
+initial_investment = 50000
+monthly_total = 1800
 rent_payments = 1250
 mortgage_payments = 1250
 house_value = 400000
