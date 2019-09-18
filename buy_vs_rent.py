@@ -1,87 +1,105 @@
 #!/usr/bin/env python3
-years = 25
-initial_investment = 50000
-monthly_total = 1800
-rent_payments = 1250
-mortgage_payments = 1250
-house_value = 400000
 
-savings_interest = 0.07
-mortgage_interest = 0.03
-house_growth = 0.03
+"""
+- Capital gains tax/stamp duty
+- Rent increase
+- House upkeep
+- Salary increase
+"""
+
+from dataclasses import dataclass
 
 
-def calc_net_assets(
-    years,
-    savings_start,
-    savings_interest,
-    savings_payments,
-    mortgage_start=0,
-    mortgage_interest=0,
-    mortgage_payments=0,
-    house_value=0,
-    house_yearly_growth=0,
-):
+@dataclass
+class Accounts:
+    savings_start: float = 0
+    savings_interest: float = 0.07
+    savings_payments: float = 0
+    expendible_income_increase: float = 0
+    rent_payments: float = 0
+    rent_growth: float = 0
+    mortgage_start: float = 0
+    mortgage_interest: float = 0.025
+    mortgage_payments: float = 0
+    house_value: float = 0
+    house_growth: float = 0.03
 
-    info = dict(
-        savings_start=savings_start,
-        savings_payments=savings_payments,
-        mortgage_start=mortgage_start,
-        mortgage_payments=mortgage_payments,
-        mortgage=mortgage_start,
-        mortgage_paid=house_value - mortgage_start,
-        savings=savings_start,
-        savings_paid=savings_start,
-        house_value=house_value,
-    )
-    one_off_savings = 0
+    def __post_init__(self):
+        self.savings = self.savings_start
+        self.savings_paid = 0
+        self.mortgage = self.mortgage_start
+        self.mortgage_paid = 0
 
-    for year in range(years):
-        # Compound monthly
+    def step(self):
+        """Do a single step"""
+        one_off_savings = 0
+
         for month in range(12):
-
             ## Calculate mortgage value
-            m_interest = info["mortgage"] * (mortgage_interest / 12)
-            info["mortgage"] += m_interest
+            m_interest = self.mortgage * (self.mortgage_interest / 12)
+            self.mortgage += m_interest
 
             # Subtract payments
-            info["mortgage"] -= mortgage_payments
-            info["mortgage_paid"] += mortgage_payments
+            self.mortgage -= self.mortgage_payments
+            self.mortgage_paid += self.mortgage_payments
 
             # The month the mortgage is paid off, put everything into savings
-            if info["mortgage"] <= 0 and mortgage_payments != 0:
-                one_off_savings = -info["mortgage"]
-                savings_payments += mortgage_payments
-                mortgage_payments = 0
-                info["mortgage"] = 0
-                info["mortage paid off year"] = year
+
+            if self.mortgage <= 0 and self.mortgage_payments != 0:
+                one_off_savings = -self.mortgage
+                self.savings_payments += self.mortgage_payments
+                self.mortgage_payments = 0
+                self.mortgage = 0
+                # self.mortage_year_paid_off = year
 
             ## Calculate savings value
             # Add savings interest
-            s_interest = info["savings"] * (savings_interest / 12)
-            info["savings"] += s_interest
+            s_interest = self.savings * (self.savings_interest / 12)
+            self.savings += s_interest
 
             # Add savings
-            info["savings"] += savings_payments + one_off_savings
-            info["savings_paid"] += savings_payments + one_off_savings
+            self.savings += self.savings_payments + one_off_savings
+            self.savings_paid += self.savings_payments + one_off_savings
             one_off_savings = 0
 
         # Update house price (annually, it doesn't compound)
-        house_value_accrued = info["house_value"] * house_growth
-        info["house_value"] += house_value_accrued
+        house_value_accrued = self.house_value * self.house_growth
+        self.house_value += house_value_accrued
 
-    info["total_assets"] = 0
+        self.update_total_assets()
 
-    if info["mortgage_paid"] > 0:
-        house_fraction_owned = 1 - (
-            info["mortgage"] / (info["mortgage"] + info["mortgage_paid"])
-        )
-        info["house_percent_owned"] = house_fraction_owned * 100
+    def update_total_assets(self):
+        total_assets = 0
 
-        info["total_assets"] += house_fraction_owned * info["house_value"]
+        if self.mortgage_paid > 0:
+            house_fraction_owned = 1 - (
+                self.mortgage / (self.mortgage + self.mortgage_paid)
+            )
+            self.house_percent_owned = house_fraction_owned * 100
 
-    info["total_assets"] += info["savings"] - info["mortgage"]
-    return info
+            total_assets += house_fraction_owned * self.house_value
+
+        total_assets += self.savings - self.mortgage
+        self.total_assets = total_assets
+
+    def step_n_years(self, years):
+        for year in range(years):
+            self.step()
+
+    def pretty_print(self):
+        print("*" * 70)
+        to_print = [
+            "mortgage",
+            "mortgage_paid",
+            "mortgage_payments",
+            "savings",
+            "total_assets",
+        ]
+        for k in to_print:
+            v = getattr(self, k)
+            v = f"{round(v, 2):,}"
+            info = f"{k: <50}{v: >20}"
+            print(info)
 
 
 def print_info(info):
@@ -92,41 +110,25 @@ def print_info(info):
         print(text)
 
 
-## Calculate the savings total
-info = calc_net_assets(
-    years, initial_investment, savings_interest, monthly_total - rent_payments
-)
-print_info(info)
+years = 25
+initial_investment = 50000
 
-## Calculate the house buying + savings total
-
-info = calc_net_assets(
-    years,
-    0,
-    savings_interest,
-    monthly_total - mortgage_payments,
-    house_value - initial_investment,
-    mortgage_interest,
-    mortgage_payments,
-    house_value,
-    house_growth,
+account = Accounts(
+    rent_payments=1200, savings_start=initial_investment, savings_payments=800
 )
 
-print_info(info)
+account.step_n_years(years)
+account.pretty_print()
 
+house_value = 400000
+mortgage_start = house_value - initial_investment
 
-## Less in mortgage
-house_deposit = 50000
-info = calc_net_assets(
-    years,
-    initial_investment - house_deposit,
-    savings_interest,
-    monthly_total - mortgage_payments,
-    house_value - house_deposit,
-    mortgage_interest,
-    mortgage_payments,
-    house_value,
-    house_growth,
+account = Accounts(
+    mortgage_payments=1200,
+    mortgage_start=mortgage_start,
+    house_value=house_value,
+    savings_payments=800,
 )
 
-print_info(info)
+account.step_n_years(years)
+account.pretty_print()
