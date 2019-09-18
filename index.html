@@ -25,15 +25,19 @@
   <div class="buy-rent">
     <h2>Accommodation details</h2>
     <form action="" id="house_in">
-        Value (homeowner) <input type="number" name="hval" id="hval">
+        Mortgage payments <input type="number" name="mpay" id="mpay">
         Upkeep costs (homeowner) <input type="number" name="hup" id="hup">
         Rent <input type="number" name="rent" id="rent">
         Bills <input type="number" name="bills" id="bills">
+        <input type="button" onclick="calcMort()" value="Calculate mortgage">
+        <input type="button" onclick="calcRent()" value="Calulate Rent"> 
     </form>
   </div>
   <div class="outputs">
-    <p class="savings_int">Savings interest over 1 year is <span id="savInt1yr"></span> </p>
-    <p class="savings_int">Savings total after 1 year is <span id="total1yr"></span> </p>
+    <p class="savings_int">Savings interest over 1 year is: <span id="savInt1yr"></span> </p>
+    <p class="savings_int">Savings total after 1 year is: <span id="total1yr"></span> </p>
+    <p class="rentbills">Rent and bills after 1 year is: <span id="rentbills1yr"></span> </p>
+    <p class="mortbills1yr">Mortgage and bills after 1 year is: <span id="1yr"></span> </p>
   </div>
 </body>
 </html>
