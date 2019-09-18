@@ -12,13 +12,17 @@
   <h1>
     Buy vs Rent
   </h1>
-
-  <h2>User input</h2>
-  <form action="" id="input">
-    savings <input type="number" name="savings" id="savings"/>
-    savings interest rate <input type="number" name="savInt" id="savInt">
-    <input type="button" onclick="calcSave()" value="submit">
-  </form>
-
+  <div class="user-inputs">
+    <h2>User input</h2>
+    <form action="" id="input">
+      savings <input type="number" name="savings" id="savings"/>
+      savings interest rate <input type="number" name="savInt" id="savInt">
+      <input type="button" onclick="calcSave()" value="submit">
+    </form>
+  </div>
+  <div class="outputs">
+    <p class="savings_int">Savings interest over 1 year is <span id="savInt1yr"></span> </p>
+    <p class="savings_int">Savings total after 1 year is <span id="total1yr"></span> </p>
+  </div>
 </body>
 </html>
