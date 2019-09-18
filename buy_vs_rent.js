@@ -1,8 +1,8 @@
 // Accounts object
 function Accounts({
-  monthly_expendible_income = 0,
   savings_start = 0,
   savings_interest = 0.07,
+  savings_payments = 0,
   expendible_income_increase = 0,
   rent_payments = 0,
   rent_growth = 0,
@@ -13,9 +13,9 @@ function Accounts({
   house_growth = 0.03
 } = {}) {
   // set up default values
-  this.monthly_expendible_income = monthly_expendible_income;
   this.savings_start = savings_start;
   this.savings_interest = savings_interest;
+  this.savings_payments = savings_payments;
   this.expendible_income_increase = expendible_income_increase;
   this.rent_payments = rent_payments;
   this.rent_growth = rent_growth;
@@ -29,9 +29,6 @@ function Accounts({
   this.savings_paid = 0;
   this.mortgage = mortgage_start;
   this.mortgage_paid = 0;
-
-  this.savings_payments =
-    monthly_expendible_income - rent_payments - mortgage_payments;
 
   // set up the object methods
   this.step = function() {
@@ -96,33 +93,50 @@ function Accounts({
       this.step();
     }
   };
+
+  this.pretty_print = function() {
+    let to_print = ["mortgage", "savings", "total_assets"];
+
+    console.log("*".repeat(70));
+    for (let k of to_print) {
+      // Format v
+      let v = this[k];
+      v = v.toFixed(2).toLocaleString();
+      v = v.toString().padStart(20, " ");
+
+      // Format k
+      k = k.padEnd(50, " ");
+      let info = `${k}${v}`;
+      console.log(info);
+    }
+  };
 }
 
 function test() {
   // Check results match python with some sensible parameters
   let years = 25;
-  let initial_investment = 20000;
-  let house_value = 200000;
+  let initial_investment = 50000;
+  let house_value = 400000;
   let mortgage_start = house_value - initial_investment;
 
   // Rent type account
   let account = new Accounts({
-    monthly_expendible_income: 1000,
-    rent_payments: 800,
+    savings_payments: 800,
+    rent_payments: 1200,
     savings_start: initial_investment
   });
   account.step_n_years(years);
-  console.log(account.total_assets);
+  account.pretty_print();
 
   // Mortgage type account
   account = new Accounts({
-    monthly_expendible_income: 1000,
-    mortgage_payments: 800,
-    mortgage_start: 20000,
+    savings_payments: 800,
+    mortgage_payments: 1200,
+    mortgage_start: mortgage_start,
     house_value: house_value
   });
   account.step_n_years(years);
-  console.log(account.total_assets);
+  account.pretty_print();
 }
 
 test();
