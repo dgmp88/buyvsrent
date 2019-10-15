@@ -1,10 +1,10 @@
 function calcSave() {
   let savings = +document.getElementById("savings").value
-  let interest = +document.getElementById("savInt").value
+  let interest = +document.getElementById("savings-interest").value
   let result = savings * interest
   let total = savings += result
-  savInt1yr.innerHTML = result
-  total1yr.innerHTML = total
+  savingsInterestYr.innerHTML = result
+  savingsTotalYr.innerHTML = total
 }
 
 function calcRent() {
@@ -12,14 +12,14 @@ function calcRent() {
   let bills = +document.getElementById("bills").value
   let rbMonth = rent += bills
   let resultRent = rbMonth * 12
-  rentbills1yr.innerHTML = resultRent
+  owner1yr.innerHTML = resultRent
 }
 
 function calcMort() {
-  let huc = +document.getElementById("hup").value
-  let mortPay = +document.getElementById("mpay").value
+  let houseUpkeek = +document.getElementById("upkeep-costs").value
+  let mortgageMonth = +document.getElementById("mortgage-monthly").value
   let bills = +document.getElementById("bills").value
-  let mtMonth = mortPay += bills
-  let resultMort = mtMonth * 12
-  mortbills1yr.innerHTML = resultMort += huc
+  let ownerMonth = mortgageMonth += bills
+  let resultMortgage = ownerMonth * 12
+  owner1yr.innerHTML = resultMortgage += houseUpkeek
 }
