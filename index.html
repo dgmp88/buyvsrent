@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles/style.css">
+  <script type="text/javascript" src="./app.js"></script>
+
+  <title>Buy vs Rent</title>
+</head>
+<body>
+  <header>
+    <h1>
+      Buy vs Rent
+    </h1>
+  </header>
+  
+  <div class="row">
+    <div class="user-inputs col-50">
+      <h2>User input</h2>
+      <p>Add in your salary and saving details below.</p>
+      <form action="" id="input">
+        
+        <div class="row">
+          <div class="col-25">
+            <label for="salary">Salary:</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="salary" id="salary" placeholder="Monthly salary..."> 
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-25">     
+            <label for="committed-spend">Committed Spending:</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="committed-spend" id="committed-spend" placeholder="Committed monthly spending">    
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-25">
+            <label for="savings">Savings</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="savings" id="savings" placeholder="Your current total savings"/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-25">
+            <label for="savings-interest">Savings Interest</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="savings-interest" id="savings-interest" placeholder="Your savings interest rate">
+          </div>
+        </div>
+        
+        
+        <input type="button" onclick="calcSave()" value="Click me!">    
+      </form>
+    </div>
+  
+    <div class="outputs col-50">
+      <h2>Results</h2>
+      <div class="">
+          <p class="savings_int">Savings interest over 1 year is: <span id="savingsInterestYr"></span> </p>
+          <p class="savings_int">Savings total after 1 year is: <span id="savingsTotalYr"></span> </p>
+          <p class="rentbills">Rent and bills after 1 year is: <span id="owner1yr"></span> </p>
+          <p class="owner1yr">Mortgage and bills after 1 year is: <span id="1yr"></span> </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buy-rent">
+    <div class="row">
+      <h2>Accommodation details</h2>
+    </div>
+    <div class="row">
+      <form action="" id="house_inputs">
+
+        <div class="owner col-50">
+          <h3>Enter your ownership costs</h3>
+          <div class="col-25">
+            <label for="mortgage-monthly">Monthly mortgage payments</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="mortgage-monthly" id="mortgage-monthly">
+          </div>
+          <div class="col-25">
+            <label for="upkeep-costs">Monthly upkeep costs</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="upkeep-costs" id="upkeep-costs">
+          </div>
+        </div>
+
+        <div class="renter col-50">
+          <h3>Enter your rental costs</h3>
+          <div class="col-25">
+            <label for="rent">Rent per month</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="rent" id="rent">
+          </div>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="common-costs col-50">
+          <h3>Enter common costs</h3>
+          <div class="col-25">
+            <label for="bills">Bills</label>
+          </div>
+          <div class="col-75">
+            <input type="number" name="bills" id="bills">
+          </div>
+        </div>
+        <div class="cost-buttons col-50">
+          <input type="button" onclick="calcMort()" value="Calculate mortgage">
+          <input type="button" onclick="calcRent()" value="Calculate Rent"> 
+        </div>
+      </div>
+      </form>
+    
+    </div>
+
+
+   
+    </div>
+  
+  </body>
+</html>

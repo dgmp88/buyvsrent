@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+}
+
+
+label {
+  display: inline-block;
+}
+
+input { 
+  width: 75%;
+  padding: 10px;
+  margin: 2px;
+  border-radius: 5px;
+} 
+
+.user-inputs {
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.row {
+  width: 100%;
+}
+
+.col-25 {
+  width: 25%;
+  float: left;
+  margin-top: 5px;
+}
+
+.col-50 {
+  width: 50%;
+  float: left;
+  margin-top: 5px;
+}
+
+.col-75 {
+  width: 75%;
+  float: left;
+  margin-top: 5px;
+}
+
+.buy-rent {
+  background-color: green;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.owner {
+  background-color: blue;
+  border: 2px solid black;
+  float: left;
+}
+
+.renter {
+  float: right;
+  background-color: red;
+  border: 2px solid black;
+}
+
+.common-costs {
+  margin: 0, auto;  
+  background-color: yellow;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+.cost-buttons {
+  margin: 0, auto;  
+  float: left;
+  background-color: grey;
+}
+
+input[type=button] {
+  width: 50%;
+  border-radius: 5px;
+}
+
